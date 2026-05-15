@@ -1,0 +1,10 @@
+constants:
+  retrieve-ago-days: 14
+  notice-ago-month : 1
+  notice-ago-day : 7
+  redirect-url: http://localhost:8080/app/system/link?rurl=
+
+fcm:
+  key:
+    path: firebase-key.json
+    scope: https://www.googleapis.com/auth/cloud-platform

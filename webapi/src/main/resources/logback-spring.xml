@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+    <property name="PATH" value="etc/logs/whensday/web"/>
+    
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>[%-5p] %d{HH:mm:ss.SSS}[%r] %logger{36}.%M[line:%L] - %msg%n</Pattern>
+        </layout>
+    </appender>
+
+
+    <appender name="debug.log" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${PATH}/logback.debug.log</file>
+        <encoder>
+            <pattern>[%-5p] %d{yyyy/MM/dd HH:mm:ss.SSS}[%r] %logger{36}.%M[line:%L] - %msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${PATH}/logback.debug.log.%d{yyyyMMdd}</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="info.log" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${PATH}/logback.info.log</file>
+        <encoder>
+            <pattern>[%-5p] %d{yyyy/MM/dd HH:mm:ss.SSS}[%r] %logger{36}.%M[line:%L] - %msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${PATH}/logback.info.log.%d{yyyyMMdd}</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="error.log" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${PATH}/logback.error.log</file>
+        <encoder>
+            <pattern>[%-5p] %d{yyyy/MM/dd HH:mm:ss.SSS}[%r] %logger{36}.%M[line:%L] - %msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${PATH}/logback.error.log.%d{yyyyMMdd}</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+    <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <remoteHost>192.168.0.127</remoteHost>
+        <port>5001</port>
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <pattern>
+                    <pattern>{"hostName":"${HOSTNAME}", "appName":"whensday-web"}</pattern>
+                </pattern>
+                <timestamp/>
+                <threadName/>
+                <message/>
+                <loggerName/>
+                <logLevel/>
+                <stackTrace/>
+                <callerData/>
+            </providers>
+        </encoder>
+    </appender>
+
+    <root level="DEBUG">
+        <appender-ref ref="console"/>
+        <appender-ref ref="logstash"/>
+
+    </root>
+</configuration>
+
+
+
+
+
+

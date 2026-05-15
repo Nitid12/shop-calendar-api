@@ -1,0 +1,71 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  mail:
+    host: mail.samplecompany.com
+    port: 587
+    username: sampleapp@samplecompany.com
+    password: "***"
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: false
+            required: false
+
+
+server:
+  port: 7101
+  servlet:
+    context-path: /
+  error:
+    whitelabel:
+      enabled : true
+    path: /error
+    include-message: always
+active:
+  server: local
+  max-http-header-size: 0
+
+springdoc:
+  api-docs:
+    path: /app/docs
+  default-produces-media-type: application/json
+  swagger-ui:
+    operations-sorter: alpha
+    tags-sorter: alpha
+    path: /app/swagger-ui
+    disable-swagger-default-url: true
+    display-query-params-without-oauth2: true
+    doc-expansion: list
+  paths-to-match: /**
+  cache:
+    disabled: true
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: BASIC
+        connectTimeout: 200000
+        readTimeout: 200000
+        retryer:
+  push-api:
+    url: "https://fcm.googleapis.com/v1/projects"
+  kakao-api:
+    url: "https://kapi.kakao.com"
+  naver-api:
+    url: "https://openapi.naver.com"
+  file-post-api:
+    url: "http://localhost:25478"
+  apple-api:
+    url: "https://appleid.apple.com"
+  makeshop:
+    licensekey: "***"

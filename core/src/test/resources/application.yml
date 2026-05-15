@@ -1,0 +1,97 @@
+constants:
+  retrieve-ago-days: 14
+  notice-ago-month : 1
+  redirect-url: http://localhost:7101/app/system/link?rurl=
+
+
+spring:
+  cache:
+    type: redis
+    redis:
+      time-to-live: 3600000
+  redis:
+    cluster:
+      nodes: localhost:7001,localhost:7001,localhost:7001,localhost:7002,192.33.0.85:7002,localhost:7002
+      max-redirects: 5
+  profiles:
+    import: classpath:application.yml
+    active: test
+  main:
+    allow-bean-definition-overriding: true
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: root
+    password:
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:data.sql
+      schema-locations: classpath:table.sql
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    database: h2
+    database-platform: org.hibernate.dialect.H2Dialect
+    generate-ddl: true
+    defer-datasource-initialization: false # hibernate 초기화 전에 sql 스크립트를 실행할 것인가
+  mail:
+    # smtp 서버 호스트
+    host: mail.samplecompany.com
+    # smtp 서버 포트
+    port: 587
+    # smtp 서버 로그인 아이디(발신자)
+    username: sampleapp@samplecompany.com
+    # smtp 서버 로그인 패스워드
+    password: "***"
+    properties:
+      mail:
+        smtp:
+          # 사용자 인증 시도 여부
+          auth: true
+          starttls:
+            # startTLS 활성화 여부
+            enable: false
+            required : false
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace
+
+springdoc:
+  api-docs:
+    enabled: false
+
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: BASIC
+        # feign? ?? timeout ?? : 5?
+        connectTimeout: 200000
+        readTimeout: 200000
+        retryer:
+  push-api:
+    url: "https://fcm.googleapis.com/v1/projects"
+  kakao-api:
+    url: "https://kapi.kakao.com"
+  naver-api:
+    url: "https://openapi.naver.com"
+  file-post-api:
+    url: "http://localhost:25478"

@@ -1,0 +1,73 @@
+constants:
+  retrieve-ago-days: 14
+  notice-ago-month : 1
+  redirect-url: http://localhost:7101/app/system/link?rurl=
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  datasource: 
+    url: "***"
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: root
+    password: "***"
+
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 5000
+      connection-init-sql: SELECT 1
+      validation-timeout: 2000
+      minimum-idle: 10
+      idle-timeout: 600000
+      poolName: HikariCP
+      readOnly: false
+  
+  jpa:
+    hibernate:
+      ddl-auto: create
+    
+    properties:
+      hibernate:
+        show_sql: true  
+        format_sql: true 
+    generate-ddl: false
+  mail:
+    host: mail.samplecompany.com
+    port: 587
+    username: sampleapp@samplecompany.com
+    password: "***"
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: false
+            required : false
+
+springdoc:
+  api-docs:
+    enabled: false
+
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: BASIC
+        connectTimeout: 200000
+        readTimeout: 200000
+        retryer:
+  push-api:
+    url: "https://fcm.googleapis.com/v1/projects"
+  kakao-api:
+    url: "https://kapi.kakao.com"
+  naver-api:
+    url: "https://openapi.naver.com"
+  file-post-api:
+    url: "http://localhost:25478"

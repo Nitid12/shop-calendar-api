@@ -1,0 +1,8 @@
+rootProject.name = 'shop_calendar'
+include 'webapi'
+include 'api'
+include 'batch'
+include 'core'
+include 'domain'
+include 'external'
+

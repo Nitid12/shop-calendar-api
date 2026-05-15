@@ -1,0 +1,20 @@
+plugins {
+    id "org.sonarqube" version "3.4.0.2513"
+}
+
+subprojects {
+    apply from: "${project.getRootDir()}/gradle/common.gradle"
+    apply from: "${project.getRootDir()}/gradle/unit.test.gradle"
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "whensday"
+        property "sonar.host.url", "http://192.168.0.127:19000"
+        property "sonar.login", "sqp_d1deed6e47f3c644abbd710a0d36ac414b0a6de9"
+        property "sonar.sources", "src/main/java"
+        property "sonar.language", "java"
+        property "sonar.sourceEncoding", "UTF-8"
+        property "sonar.exclusions", "**/generated-src/**/*,**/domain/**/*"
+    }
+}

@@ -1,0 +1,32 @@
+spring:
+  datasource: # H2 DB 설정
+    url: "***"
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: root
+    password: "***"
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 5000
+      connection-init-sql: SELECT 1
+      validation-timeout: 2000
+      minimum-idle: 10
+      idle-timeout: 600000
+      poolName: HikariCP
+      readOnly: false
+  cache:
+    type: redis
+    redis:
+      time-to-live: 3600000
+  redis:
+    cluster:
+      nodes: localhost:7001,localhost:7001,localhost:7001,localhost:7002,192.33.0.85:7002,localhost:7002
+      max-redirects: 5
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    generate-ddl: false
+    defer-datasource-initialization: true

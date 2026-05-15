@@ -1,0 +1,70 @@
+plugins {
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+group 'com.sample'
+version 'unspecified'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    api project(":domain")
+    api project(":external")
+    implementation 'org.springframework:spring-context:5.0.2.RELEASE'
+    api group: 'org.modelmapper', name: 'modelmapper', version: '2.3.8'
+    api 'org.slf4j:slf4j-api:1.7.25'
+    implementation 'javax.validation:validation-api:2.0.1.Final'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    //휴일 달력 관련
+    implementation group: 'com.ibm.icu', name: 'icu4j', version: '4.6'
+
+    //Firebase Fcm 의존성
+    api 'com.google.firebase:firebase-admin:6.8.1'
+
+    //mail 관련 의존성
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'javax.mail:mail:1.4'
+
+    // TestCode 의존성
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude module: 'junit'
+        exclude module: "mockito-core"
+        exclude module: "mockito-all"
+    }
+
+    // h2database
+    testRuntimeOnly 'com.h2database:h2'
+
+    // mock
+    testImplementation 'org.mockito:mockito-core:3.7.7'
+    testImplementation 'org.mockito:mockito-all:1.10.19'
+
+    testImplementation(platform("org.junit:junit-bom:5.10.0"))
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher") {
+        because("Only needed to run tests in a version of IntelliJ IDEA that bundles older versions")
+    }
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testRuntimeOnly("org.junit.vintage:junit-vintage-engine")
+}
+
+jar { enabled = true }
+
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:2021.0.1'
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+tasks {
+    processResources {
+        duplicatesStrategy = org.gradle.api.file.DuplicatesStrategy.INCLUDE
+    }
+}
